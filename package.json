@@ -1,0 +1,19 @@
+{
+  "name": "perfectfetch",
+  "version": "1.0.0",
+  "description": "Get your code on!",
+  "main": "client/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PerfectFetch/PerfectFetch.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PerfectFetch/PerfectFetch/issues"
+  },
+  "homepage": "https://github.com/PerfectFetch/PerfectFetch#readme"
+}
