@@ -1,0 +1,1 @@
+//add the get, delete, find etc requests to the user table
