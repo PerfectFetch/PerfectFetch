@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/PerfectFetch/PerfectFetch/issues"
   },
-  "homepage": "https://github.com/PerfectFetch/PerfectFetch#readme"
+  "homepage": "https://github.com/PerfectFetch/PerfectFetch#readme",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
