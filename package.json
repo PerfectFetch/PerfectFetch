@@ -1,24 +1,39 @@
 {
-  "name": "perfectfetch",
+  "name": "PerfectFetch",
   "version": "1.0.0",
-  "description": "Get your code on!",
-  "main": "client/index.js",
+  "description": "",
+  "main": "test.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-dev-server --open --hot --inline --progress --colors --watch --content-base ./"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PerfectFetch/PerfectFetch.git"
   },
+  "keywords": [],
   "author": "",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/PerfectFetch/PerfectFetch/issues"
   },
-  "homepage": "https://github.com/PerfectFetch/PerfectFetch#readme",
-  "dependencies": {
+  "homepage": "https://github.com/PerfectFetch/PerfectFetch#readme"
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-google-maps": "^9.4.5"
+    "style-loader": "^1.0.0",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.8.0"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1"
   }
 }
