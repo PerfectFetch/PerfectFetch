@@ -18,14 +18,14 @@ const pool = new Pool({
     connectionString: connectionString
 })
 
-const text = 'INSERT INTO users ( id, name, password, email ) VALUES($1, $2, $3, $4)  RETURNING *'
-const values =  [ 1, "david", "dav@dav.com", "1234" ]
+// const text = 'INSERT INTO users (name, password, email ) VALUES($1, $2, $3)  RETURNING *'
+// const values =  ["iumi","1234", "iumi@dog.com" ]
 
-pool.query(text, values, (err, res) => {
- console.log(err, res)
- if (err) console.log(err, "error connecting to db");
- else { console.log('connected!') }
-//  pool.end()
-})
+// pool.query(text, values, (err, res) => {
+//  console.log(err, res)
+//  if (err) console.log(err, "error connecting to db");
+//  else { console.log('connected!') }
+// //  pool.end()
+// })
 
 module.exports = pool;
