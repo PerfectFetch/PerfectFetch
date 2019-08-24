@@ -4,8 +4,8 @@ module.exports =  {
     "mode": "development",
     "entry": "client/index.js",
     "output": {
-        "path": __dirname+'/public',
-        "filename": "[name].[chunkhash:8].js"
+        "path": path.join(__dirname, 'build',
+        "filename": "bundle.js"
     },
     "module": {
         "rules": [
@@ -37,5 +37,12 @@ module.exports =  {
                 ]
             }
         ]
-    }
-}
+    },
+    devServer: {
+        publicPath: '/build/',
+        port: 8080,
+        proxy: {
+          '/': 'http://localhost:3000',
+        }
+      }
+};
