@@ -1,41 +1,23 @@
-const path = require('path');
+var path = require('path');
+var HtmlWebpackPlugin =  require('html-webpack-plugin');
 
-module.exports =  {
-    "mode": "development",
-    "entry": "client/index.js",
-    "output": {
-        "path": __dirname+'/public',
-        "filename": "[name].[chunkhash:8].js"
+module.exports = {
+    entry : './client/index.js',
+    output : {
+        path : path.resolve(__dirname , 'public'),
+        filename: 'bundle.js'
     },
-    "module": {
-        "rules": [
-            {
-                "enforce": "pre",
-                "test": /\.(js|jsx)$/,
-                "exclude": /node_modules/,
-                "use": "eslint-loader"
-            },
-            {
-                "test": /\.(js|jsx)$/,
-                "exclude": /node_modules/,
-                "use": {
-                    "loader": "babel-loader",
-                    "options": {
-                        "presets": [
-                            "env",
-                            "react"
-                        ]
-                    }
-                }
-            },
-            {
-                "test": /\.scss$/,
-                "use": [
-                    "style-loader",
-                    "css-loader",
-                    "sass-loader"
-                ]
-            }
+    module : {
+        rules : [
+            {test : /\.(js)$/, use:'babel-loader'},
+            {test : /\.css$/, use:['style-loader', 'css-loader']}
         ]
-    }
+    },
+    mode:'development',
+    plugins : [
+        new HtmlWebpackPlugin ({
+            template : 'public/index.html'
+        })
+    ]
+
 }
