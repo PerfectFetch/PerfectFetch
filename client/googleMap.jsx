@@ -2,16 +2,19 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "reac
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-const Map = () => {
-
-return (
+const MapWithAMarker = withScriptjs(withGoogleMap(props => 
   <GoogleMap
-  defaultZoom={10}
-  center={ { lat: 40.7831, lng: 73.9712} }
-  />
-);
-};
+    defaultZoom={12}
+    defaultCenter={{ lat: 40.719405, lng: -74.001824 }}
+    >
 
-const WrappedMap = withScriptjs(withGoogleMap(Map));
+      <Marker
+        position={{ lat: 40.719405, lng: -74.001824 }}
+      />
 
-export default WrappedMap;
+  </GoogleMap>
+));
+
+const WrappedMapWithMarker = MapWithAMarker;
+
+export default WrappedMapWithMarker;
