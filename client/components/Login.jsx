@@ -5,28 +5,40 @@ class Login extends Component {
   constructor(props){
     super(props);
     this.state = {
-      name: '',
+      email: '',
       password: ''
     };
-    this.handleChange = this.handleChange.bind(this)
+    this.handleEmailChange = this.handleEmailChange.bind(this)
+    this.handlePasswordChange = this.handlePasswordChange.bind(this)
   }
-  handleChange(event){
-      const { name, value } = event.target;
+
+  handleEmailChange(event){
+      const { value } = event.target;
+      event.preventDefault();
+      console.log("event.target: ", value)
       this.setState({
-          [name] : value
+          email: value
       });
   }
+
+  handlePasswordChange(event){
+    const { value } = event.target;
+    event.preventDefault();
+    console.log("event.target: ", value)
+    this.setState({
+        password: value
+    });
+}
   render() {
-    const { name,  password } = this.state; 
     
     return (
       <div>
       <div id="container-login" align="center">
-        <form onSubmit={()=> { this.props.handleSubmit(this.state)
+        <form onSubmit={(event)=> { this.props.handleLoginSubmit(this.state, event)
           } }>
         <h2>Login</h2>
-          <input type="text" name="name" value={name} onChange={this.handleChange} placeholder="Email" />
-          <input type="password" name="password" value={password} onChange={this.handleChange}  placeholder="Password" />
+          <input type="text" name="email" onChange={(event) => {this.handleEmailChange(event)}} placeholder="Email" />
+          <input type="password" name="password" onChange={(event) => {this.handlePasswordChange(event)}}  placeholder="Password" />
           <button type="submit">Go!</button>
           <br /><br />To register go to <Link to={`/Signup`}>Signup page</Link>
         </form>

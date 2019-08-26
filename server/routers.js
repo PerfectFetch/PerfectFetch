@@ -15,7 +15,7 @@ router.post('/signup', userController.createUser, (req, res, err) => {
 //post request that checks users login info against that of the database
 router.post('/login', userController.loginUser, (req, res, err) => {
     if (!err) {
-        res.status(200).json()
+        res.status(200).json();
     }
 })
 

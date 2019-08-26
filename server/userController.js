@@ -36,7 +36,8 @@ userController.createUser = (req, res, next) => {
           } else {
             //if not, redirect the user to the home page
             console.log('account successfully created')
-            res.status(200).redirect('/home')
+            if (data === true)
+            return res.status(200).send({isSignedUp: true})
           }
           // pool.end()
         })
@@ -52,6 +53,7 @@ userController.createUser = (req, res, next) => {
 
 userController.loginUser = (req, res, next) => {
     //destructuring
+    // console.log("req.body: ", req.body)
     const { email, password } = req.body
     //if no email or password are inputted
     if (!email || !password) {
@@ -63,12 +65,14 @@ userController.loginUser = (req, res, next) => {
       //select the user where the email matches
       pool.query(reqQuery, [email], (err, data) => {
         //if we get an error loggin in...
+        // console.log('reqquery:', reqQuery);
         if (err) {
           //...send an error
           return res.status(400).send("unable to verify credentials")
         }
         //destructure rows
         const { rows } = data;
+        // console.log("rows: ", rows)
         //if our rows array does not exist. on the data we get back..
         if (!rows[0]) {
           //...email does not exist in the database, try log in again!
@@ -81,10 +85,13 @@ userController.loginUser = (req, res, next) => {
           //compare the password we want to log in with with the hashed password
           bcrypt.compare(password, hash, (err, result) => {
             //if the passwords match...
+            console.log("before data is true")
             if (result === true) {
               //...let user login
-              //! need to add redirect here
-              res.status(200).send('Login successful!')
+              console.log("data is true!")
+              // res.end("test")
+              return res.status(200).send({isLoggedIn: true})
+          
             } else {
               //...if not, send an error
               res.status(400).send('Invalid password, try again!')
@@ -93,6 +100,6 @@ userController.loginUser = (req, res, next) => {
         }
       })
     }
-    next();
+    // next();
   }
 module.exports = userController
