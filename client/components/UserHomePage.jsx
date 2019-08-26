@@ -84,7 +84,6 @@ class UserHomePage extends Component {
           <AddButton 
           getUserLocation={this.getUserLocation}
           />
-          {/* <findButton /> */}
         </div>
       </div>
     );
