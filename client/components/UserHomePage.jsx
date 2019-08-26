@@ -67,7 +67,6 @@ class UserHomePage extends Component {
       // wrapper div for googleMap, add button, find button
       
       <div>
-        {/* googleMap component */}
         <div className={'mapContainer'}>
             <div className='googleMap'>
                 <WrappedMapWithMarker 
@@ -79,6 +78,9 @@ class UserHomePage extends Component {
                 information={this.state.information}
                 />
             </div>
+        </div>
+        <div className={'addFindContainer'}>
+          {/* put add and find components here */}
         </div>
       {/* div(s) for add and find components should go here */}
 
