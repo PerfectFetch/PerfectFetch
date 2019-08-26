@@ -1,57 +1,98 @@
-//add the get, delete, find etc requests to the user table
-//to be able to add a new user upon sign up
-//to search a user/pass upon login and authenticate?
-
-// const uuidv4 = require('uuidv4');
 const userController = {};
 const pool = require('./database')
-// const bodyParser = require('body-parser')
-// const app = express();
-// app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(bodyParser.json())
+const bcrypt = require('bcrypt')
 
 //signup logic
 userController.createUser = (req, res, next) => {
-    if (!req.body.name || !req.body.email || !req.body.password) {
-        console.log("reqBody: ", (req.body))
-        return res.status(400).send("some values are missing")
-    } else {
-        const userQuery = 'INSERT INTO users (name, password, email ) VALUES($1, $2, $3)  RETURNING *';
+  //destructuring
+  const {
+    name,
+    email,
+    password
+  } = req.body
+  //if one of the required values don't exist..
+  if (!name || !email || !password) {
+    //send a 400 error
+    return res.status(400).send("some values are missing")
+  } else {
+    //hash the password using bcrypt
+    bcrypt.hash(password, 10).then(function (hash) {
+
+        //query that will add values into our database
+        const userQuery = 'INSERT INTO users (name, email, password ) VALUES($1, $2, $3)  RETURNING *';
+        //actual values to be added into database
         const userValues = [
-            // uuidv4(),
-            req.body.name,
-            req.body.email,
-            req.body.password
+          req.body.name,
+          req.body.email,
+          hash
         ]
 
+        //query the above data
         pool.query(userQuery, userValues, (err, data) => {
-            if (err) console.log(err, "error creating user");
-            else { 
-                console.log('account successfully created') 
-                res.status(200).redirect('/home')
-            }
-            // pool.end()
-           })
-    }
-    next();
+          //if we hit an error, display the error
+          if (err) {
+            console.log(err, "error creating user");
+            res.status(400).send("invalid user info")
+          } else {
+            //if not, redirect the user to the home page
+            console.log('account successfully created')
+            res.status(200).redirect('/home')
+          }
+          // pool.end()
+        })
+      })
+      .catch((err) => {
+        console.log("error during bcrypt", err);
+        res.status(500).send(err);
+      });
+  }
+  next();
 }
 
-// userController.loginUser = (req, res, next) => {
 
-// }
-
+userController.loginUser = (req, res, next) => {
+    //destructuring
+    const { email, password } = req.body
+    //if no email or password are inputted
+    if (!email || !password) {
+      //return an error
+      return res.status(400).send("Some input is missing")
+    } else {
+      //grab emails from users table
+      const reqQuery = 'SELECT * FROM users WHERE email = $1';
+      //select the user where the email matches
+      pool.query(reqQuery, [email], (err, data) => {
+        //if we get an error loggin in...
+        if (err) {
+          //...send an error
+          return res.status(400).send("unable to verify credentials")
+        }
+        //destructure rows
+        const { rows } = data;
+        //if our rows array does not exist. on the data we get back..
+        if (!rows[0]) {
+          //...email does not exist in the database, try log in again!
+          return res.status(400).send("invalid email please try again")
+        }
+        //if our rows array contains a password property that matches our inputted password...
+        else {
+          //...store the hashed password that's already in the database
+          let hash = rows[0].password;
+          //compare the password we want to log in with with the hashed password
+          bcrypt.compare(password, hash, (err, result) => {
+            //if the passwords match...
+            if (result === true) {
+              //...let user login
+              //! need to add redirect here
+              res.status(200).send('Login successful!')
+            } else {
+              //...if not, send an error
+              res.status(400).send('Invalid password, try again!')
+            }
+          })
+        }
+      })
+    }
+    next();
+  }
 module.exports = userController
-//logging in psudeocode
-//do a post request to the /login path
-
-//if the username & password inputted on the request body are true..
-
-    //and if the results.length we get from the password passed in is greater than zero??? 
-
-    //..we will connect to our database and pass in our username and password. we should change the state of our user to be logged in and redirect them to the path they're meant to go to when they successfully log in...in this case '/home'
-
-    //if the results.length are less than zerohen we will send an error
-
-    //either way, we'll end the response with the database after the fact
-
-//if the username and password are not correct, then send an error asking for the username and password
