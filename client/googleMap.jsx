@@ -1,4 +1,4 @@
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
@@ -12,18 +12,19 @@ const MapWithAMarker = withScriptjs(withGoogleMap((props) => {
   for (let i = 0; i < props.locationMarkers.length; i += 1){
     markersToDisplay.push(
       <Marker position={props.locationMarkers[i]} key={`marker_${i}`}>
-        <InfoBox
+        <InfoWindow
         position={props.locationMarkers[i]}
-        // options={{ closeBoxURL: ``, enableEventPropagation: true }}
+        options={{ closeBoxURL: ``, enableEventPropagation: true }}
+        // setVisible={{setVisible: false}}
         // THE ABOVE LINE OF CODE BREAKS EVERYTHING. need to do some research on how to make this info box populate with user data onClick, and disappear at other times.
         key={`infoBox_${i}`}
         >
           <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
             <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
-              Hello, user!
+              {props.information[i]}
             </div>
           </div>
-        </InfoBox>
+        </InfoWindow>
       </Marker>
     );
   }

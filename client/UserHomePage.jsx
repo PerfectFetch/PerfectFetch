@@ -11,7 +11,11 @@ class UserHomePage extends Component {
     super(props);
     // set up state here, and then prop drill to googleMap component to render additional markers?
     // make a fetch request to the database to get all of the locations that are stored??
-    this.state = { locations: [{lat: 40.7580, lng: -73.9855}, {lat: 40.7536, lng: -73.9832}, {lat: 40.7127, lng: -74.0134}] };
+    // NOTE: state should be initialized to have only those user objects which are present in the database. The ones below are hard coded to test state change.
+    this.state = { 
+      locations: [{lat: 40.7580, lng: -73.9855}, {lat: 40.7536, lng: -73.9832}, {lat: 40.7127, lng: -74.0134}],
+      information: [['working on React'], ['need help with Redux'], ['need help connecting SQL DB to front-end']],
+  };
 
   }
 
@@ -30,6 +34,7 @@ class UserHomePage extends Component {
         // ADD currentPosition TO THE CACHED LOCATIONS (make an initial request to DB on login for all locations, and then cache these locations. Add new location to this cache.)
 
         resolve(currentPosition);
+        reject('failed to get user current position');
 
       });
 
@@ -38,6 +43,7 @@ class UserHomePage extends Component {
     promise.then((currentPosition)=>{
       const newState = JSON.parse(JSON.stringify(this.state));
       newState.locations.push(currentPosition);
+      // add user information about their project
       this.setState(newState);
 
     })
@@ -50,7 +56,6 @@ class UserHomePage extends Component {
 
   componentDidMount(){
 
-// currently the async getUserLocation function is throwing off the timing of events...
     const userPosition = this.getUserLocation();
     console.log('userPosition', userPosition);
 // Presently this function is run on 'componentDidMount'. Could create an a function that would be incoked when a button is clicked, and then the user's location is retrieved when they want to add themselves to the map. Should be as simple as creating a handleClick function, binding it, and then incoking it when the ADD button is clicked. Need to talk to Derek and integrate his homePage components with mine. Then we can integrate this function with his ADD component.
@@ -71,6 +76,7 @@ class UserHomePage extends Component {
                 containerElement={<div style={ {height: '100%'} }/> }
                 mapElement={<div style={ {height: '100%'} }/> }
                 locationMarkers={this.state.locations} 
+                information={this.state.information}
                 />
             </div>
         </div>
