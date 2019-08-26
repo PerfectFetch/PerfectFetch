@@ -1,0 +1,106 @@
+html {
+    background-color: grey;
+  }
+
+  h1 {
+      color: white;
+  }
+  
+  #container-login {
+    background-color: #31293f;
+    height: 400px;
+    width: 350px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50px;
+  }
+  #container-signup {
+    background-color: #31293f;
+    height: 450px;
+    width: 350px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50px;
+  }
+  
+  form {
+    margin-top: 35px;
+    color: white;
+    
+  }
+  
+  form > a:active {
+    color: rgb(255, 81, 0);
+  }
+  form > a:link {
+    color: rgb(255, 81, 0);
+  }
+  form > a:visited {
+    color: rgb(255, 81, 0);
+  }
+  form > a:hover {
+    color: rgb(9, 255, 0);
+  }
+  input[type=text] {
+    width: 80%;
+    padding: 16px 40px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: white;
+    color: grey;
+    font-size: 25px;
+    border-radius: 50px;
+  }
+  input[type=password] {
+    width: 80%;
+    padding: 16px 40px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: white;
+    color: grey;
+    font-size: 25px;
+    border-radius: 50px;
+  }
+  
+  button{
+    background-color: #e04816;
+    width: 80%;
+    border: none;
+    color: white;
+    padding: 10px 0;
+    margin-top: 30px;
+    cursor: pointer;
+    font-size: 25px;
+    border-radius: 50px;
+  }
+  
+  button:hover {
+    filter: brightness(110%)
+  }
+
+  .googleMap {
+    height: 40rem;
+    width: 60rem;
+  
+  }
+  
+  .mapContainer {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .addFindContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
