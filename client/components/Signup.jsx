@@ -1,42 +1,30 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 
-class Signup extends React.Component {
+class Signup extends Component {
   constructor(props){
     super(props)
-    this.initialState = {
+    this.state = {
       name: '',
       email: '',
       password: ''
     };
     this.handleChange = this.handleChange.bind(this)
-    this.state = this.initialState;  
   }
-
   handleChange(event){
     const { name, value } = event.target;
-
     this.setState({
         [name] : value
     });
 }
-
-onFormSubmit(event){
-    event.preventDefault();
-
-    this.props.handleSubmit(this.state);
-    this.setState(this.initialState);
-
-}
   render() {
-
     const { name, email, password } = this.state
       return (
         <div>
         
         <div id="container-signup" align="center">
         
-        <form onSubmit={this.onFormSubmit}>
+        <form onSubmit={ this.props.handleSubmit(this.state)}>
         <h2>SIGNUP</h2>
             <input type="text" name="name" value={name} onChange={this.handleChange}  placeholder="Name" />
             <input type="text" name="email" value={email} onChange={this.handleChange}  placeholder="Email" />
