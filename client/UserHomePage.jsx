@@ -40,7 +40,9 @@ class UserHomePage extends Component {
       newState.locations.push(currentPosition);
       this.setState(newState);
 
-    });
+    })
+    .catch(console.error('Promise failed to resolve properly.')
+    );
   }
     
     //promise.then(//create new marker on map and send location to database)
@@ -51,7 +53,8 @@ class UserHomePage extends Component {
 // currently the async getUserLocation function is throwing off the timing of events...
     const userPosition = this.getUserLocation();
     console.log('userPosition', userPosition);
-
+// Presently this function is run on 'componentDidMount'. Could create an a function that would be incoked when a button is clicked, and then the user's location is retrieved when they want to add themselves to the map. Should be as simple as creating a handleClick function, binding it, and then incoking it when the ADD button is clicked. Need to talk to Derek and integrate his homePage components with mine. Then we can integrate this function with his ADD component.
+// NOTE: Still need to add an information box to each marker.
   }
 
   render(){

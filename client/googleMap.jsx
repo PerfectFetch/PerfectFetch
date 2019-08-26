@@ -10,7 +10,22 @@ const MapWithAMarker = withScriptjs(withGoogleMap((props) => {
   const markersToDisplay = [];
 
   for (let i = 0; i < props.locationMarkers.length; i += 1){
-    markersToDisplay.push(<Marker position={props.locationMarkers[i]} key={`marker_${i}`} />);
+    markersToDisplay.push(
+      <Marker position={props.locationMarkers[i]} key={`marker_${i}`}>
+        <InfoBox
+        position={props.locationMarkers[i]}
+        // options={{ closeBoxURL: ``, enableEventPropagation: true }}
+        // THE ABOVE LINE OF CODE BREAKS EVERYTHING. need to do some research on how to make this info box populate with user data onClick, and disappear at other times.
+        key={`infoBox_${i}`}
+        >
+          <div style={{ backgroundColor: `yellow`, opacity: 0.75, padding: `12px` }}>
+            <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
+              Hello, user!
+            </div>
+          </div>
+        </InfoBox>
+      </Marker>
+    );
   }
   
   return(
