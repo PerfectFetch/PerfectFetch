@@ -9,7 +9,7 @@ class Signup extends Component {
       email: '',
       password: ''
     };
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
   }
   handleChange(event){
     const { name, value } = event.target;
@@ -18,7 +18,7 @@ class Signup extends Component {
     });
 }
   render() {
-    const { name, email, password } = this.state
+    const { name, email, password } = this.state;
       return (
         <div>
         
@@ -38,4 +38,4 @@ class Signup extends Component {
     }
   }
 
-  export default Signup 
+  export default Signup; 
