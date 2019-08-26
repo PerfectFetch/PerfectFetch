@@ -83,3 +83,17 @@ html {
   button:hover {
     filter: brightness(110%)
   }
+
+  .googleMap {
+    height: 40rem;
+    width: 60rem;
+  
+  }
+  
+  .mapContainer {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
