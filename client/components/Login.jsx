@@ -4,20 +4,26 @@ import { Link } from 'react-router-dom';
 class Login extends Component {
   constructor(props){
     super(props);
+
     this.state = {
-      name: '',
+      email: '',
       password: ''
     };
     this.handleChange = this.handleChange.bind(this)
   }
   handleChange(event){
-      const { name, value } = event.target;
-      this.setState({
-          [name] : value
-      });
+    // console.log(event.target.value);
+      console.log('event.target here',event.target.value);
+      
+      // const { email, value } = event.target;
+      // this.setState({
+      //     'email' : email,
+      //     'password' : password
+      // });
   }
+
   render() {
-    const { name,  password } = this.state; 
+    const { email,  password } = this.state; 
     
     return (
       <div>
@@ -25,8 +31,8 @@ class Login extends Component {
         <form onSubmit={()=> { this.props.handleSubmit(this.state)
           } }>
         <h2>Login</h2>
-          <input type="text" name="name" value={name} onChange={this.handleChange} placeholder="Email" />
-          <input type="password" name="password" value={password} onChange={this.handleChange}  placeholder="Password" />
+          <input type="text" email="email" value={email} onChange={this.handleChange} placeholder="Email" />
+          <input type="password" email="password" value={password} onChange={this.handleChange}  placeholder="Password" />
           <button type="submit">Go!</button>
           <br /><br />To register go to <Link to={`/Signup`}>Signup page</Link>
         </form>

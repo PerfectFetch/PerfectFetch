@@ -8,26 +8,31 @@ class App extends Component {
     constructor(props){
         super(props)
         this.state = {
-           
             login: false
         };
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     handleSubmit(obj) {
-        console.log(obj);
+        console.log('obj here', obj);
         this.setState({login:true})
         
         // this.setState({data: [...this.state.data]});
     }
+    handleSubmitSignup(obj) {
+        console.log(obj);
+        // this.setState({login:true})
+        
+        // this.setState({data: [...this.state.data]});
+    }
     render() {
-      const { data } = this.state;
+    //   const { data } = this.state;
 
       if(this.state.login===false) return (
         <div className="router">
         <main>
           <Switch>
             <Route exact path="/" component={()=><Login  handleSubmit={this.handleSubmit} /> } />
-            <Route exact path="/Signup"component={()=><Signup handleSubmit={this.handleSubmit} />}/>
+            <Route exact path="/Signup"component={()=><Signup handleSubmitSignup={this.handleSubmitSignup} />}/>
           </Switch>
         </main>
       </div>

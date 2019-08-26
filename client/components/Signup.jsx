@@ -5,28 +5,28 @@ class Signup extends Component {
   constructor(props){
     super(props)
     this.state = {
-      name: '',
+      namebb: '',
       email: '',
       password: ''
     };
     this.handleChange = this.handleChange.bind(this)
   }
   handleChange(event){
-    const { name, value } = event.target;
+    const { email, value } = event.target;
     this.setState({
-        [name] : value
+        [email] : value
     });
 }
   render() {
-    const { name, email, password } = this.state
+    const { namebb, email, password } = this.state
       return (
         <div>
         
         <div id="container-signup" align="center">
         
-        <form onSubmit={ this.props.handleSubmit(this.state)}>
+        <form onSubmit={ this.props.handleSubmitSignup()}>
         <h2>SIGNUP</h2>
-            <input type="text" name="name" value={name} onChange={this.handleChange}  placeholder="Name" />
+            <input type="text" name="namebb" value={namebb} onChange={this.handleChange}  placeholder="Name" />
             <input type="text" name="email" value={email} onChange={this.handleChange}  placeholder="Email" />
             <input type="password" name="password" value={password} onChange={this.handleChange}  placeholder="Password" />
             <button type="submit">Signup!</button>
