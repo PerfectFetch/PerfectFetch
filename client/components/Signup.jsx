@@ -44,7 +44,7 @@ class Signup extends Component {
 
  
   render() {
-    const { name, email, password } = this.state
+    const { name, email, password } = this.state;
       return (
         <div>
         
@@ -64,4 +64,4 @@ class Signup extends Component {
     }
   }
 
-  export default Signup 
+  export default Signup; 

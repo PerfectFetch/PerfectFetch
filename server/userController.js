@@ -1,3 +1,7 @@
+//comments done by Irish Dave
+
+//bcrypt npm
+
 const userController = {};
 const pool = require('./database')
 const bcrypt = require('bcrypt')
@@ -5,25 +9,22 @@ const bcrypt = require('bcrypt')
 //signup logic
 userController.createUser = (req, res, next) => {
   //destructuring
-  const {
-    name,
-    email,
-    password
-  } = req.body
+  const { name, email, password } = req.body
   //if one of the required values don't exist..
   if (!name || !email || !password) {
     //send a 400 error
     return res.status(400).send("some values are missing")
   } else {
     //hash the password using bcrypt
+    //password is password to hash
     bcrypt.hash(password, 10).then(function (hash) {
 
         //query that will add values into our database
         const userQuery = 'INSERT INTO users (name, email, password ) VALUES($1, $2, $3)  RETURNING *';
         //actual values to be added into database
         const userValues = [
-          req.body.name,
-          req.body.email,
+          name,
+          email,
           hash
         ]
 
@@ -31,7 +32,6 @@ userController.createUser = (req, res, next) => {
         pool.query(userQuery, userValues, (err, data) => {
           //if we hit an error, display the error
           if (err) {
-            console.log(err, "error creating user");
             res.status(400).send("invalid user info")
           } else {
             //if not, redirect the user to the home page
@@ -39,7 +39,6 @@ userController.createUser = (req, res, next) => {
             if (data === true)
             return res.status(200).send({isSignedUp: true})
           }
-          // pool.end()
         })
       })
       .catch((err) => {
@@ -47,6 +46,7 @@ userController.createUser = (req, res, next) => {
         res.status(500).send(err);
       });
   }
+  //!potentially not needed as we have no other middleware to run?
   next();
 }
 
@@ -65,7 +65,6 @@ userController.loginUser = (req, res, next) => {
       //select the user where the email matches
       pool.query(reqQuery, [email], (err, data) => {
         //if we get an error loggin in...
-        // console.log('reqquery:', reqQuery);
         if (err) {
           //...send an error
           return res.status(400).send("unable to verify credentials")
@@ -85,13 +84,9 @@ userController.loginUser = (req, res, next) => {
           //compare the password we want to log in with with the hashed password
           bcrypt.compare(password, hash, (err, result) => {
             //if the passwords match...
-            console.log("before data is true")
             if (result === true) {
               //...let user login
-              console.log("data is true!")
-              // res.end("test")
               return res.status(200).send({isLoggedIn: true})
-          
             } else {
               //...if not, send an error
               res.status(400).send('Invalid password, try again!')
@@ -100,6 +95,7 @@ userController.loginUser = (req, res, next) => {
         }
       })
     }
-    // next();
+    //!potentially not needed as we have no other middleware to run
+    next();
   }
 module.exports = userController
