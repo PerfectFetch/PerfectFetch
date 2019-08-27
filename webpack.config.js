@@ -19,6 +19,12 @@ module.exports = {
         new HtmlWebpackPlugin ({
             template : 'public/index.html'
         })
-    ]
-
+    ],
+    // this allows to bridge port 8080 with port 3000 requests
+    devServer: {
+        port: 8080,
+        proxy: {
+          '/': 'http://localhost:3000/',
+        }
+      }
 }
