@@ -5,9 +5,4 @@ import App from './App.jsx';
 import '../public/style.css';
 
 
-render(
-    <BrowserRouter>
-    <App />
-    </BrowserRouter>
-    ,document.getElementById('root')
-);
+render(<App />, document.querySelector('#root'));
