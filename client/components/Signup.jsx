@@ -5,7 +5,7 @@ class Signup extends Component {
   constructor(props){
     super(props)
     this.state = {
-      name: '',
+      namebb: '',
       email: '',
       password: ''
     };
@@ -13,7 +13,8 @@ class Signup extends Component {
     this.handleEmailChange = this.handleEmailChange.bind(this)
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
   }
-
+  // each input has its own handle change event method
+  // we need to refactor to allow one method to update the state
   handleNameChange(event){
     const { value } = event.target;
     event.preventDefault();
