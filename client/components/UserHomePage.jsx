@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import WrappedMapWithMarker from './googleMap.jsx';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import AddButton from './AddButton.jsx';
 
 class UserHomePage extends Component {
   
@@ -16,52 +17,52 @@ class UserHomePage extends Component {
       locations: [{lat: 40.7580, lng: -73.9855}, {lat: 40.7536, lng: -73.9832}, {lat: 40.7127, lng: -74.0134}],
       information: [['working on React'], ['need help with Redux'], ['need help connecting SQL DB to front-end']],
   };
-
+    this.getUserLocation = this.getUserLocation.bind(this);
+    this.updateUserInfoInsideState = this.updateUserInfoInsideState.bind(this);
+    // this.getUserInformation = this.getUserInformation.bind(this);
   }
 
+  componentWillMount(){
+    // fetch request to get user location an dmessages to populate map
+  fetch('http://localhost:3000/db/getAllInfo')
+  .then((res)=>res.json)
+  .then((myObj)=>{console.log(myObj);})
+  .catch('there was an error with your fetch request');
+  }
+
+  getUserLocation (userInput) {
   
-  getUserLocation () {
-  
-    const promise = new Promise (function(resolve, reject){
-      navigator.geolocation.getCurrentPosition(function(position){
+    // const promise = new Promise (function(resolve, reject){
+      navigator.geolocation.getCurrentPosition((position)=>{
   
         const currentPosition = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+        this.updateUserInfoInsideState(userInput, currentPosition);
 
-        // SEND currentPosition TO THE DATABASE, TO STORE NEW POSITION
-        // ADD currentPosition TO THE CACHED LOCATIONS (make an initial request to DB on login for all locations, and then cache these locations. Add new location to this cache.)
-
-        resolve(currentPosition);
-        reject('failed to get user current position');
 
       });
+    }
 
-    });
+    updateUserInfoInsideState(userInput, currentPosition){
+        const newState = JSON.parse(JSON.stringify(this.state));
+        newState.locations.push(currentPosition);
+        newState.information.push([userInput]);
+        this.setState(newState);
 
-    promise.then((currentPosition)=>{
-      const newState = JSON.parse(JSON.stringify(this.state));
-      newState.locations.push(currentPosition);
-      // add user information about their project
-      this.setState(newState);
+          // send location and message to the database to be stored
+          // fetch('http://localhost:3000/db/', {
+          //   method: 'POST',
+          //   body: JSON.stringify({
+          //     latitude: currentPosition.lat,
+          //     longitude: currentPosition.lng,
+          //     message: userInput,
+          //   }),
+          // })
 
-    })
-    .catch(console.error('Promise failed to resolve properly.')
-    );
-  }
+    }
     
-    //promise.then(//create new marker on map and send location to database)
-  
-
-  componentDidMount(){
-
-    const userPosition = this.getUserLocation();
-    console.log('userPosition', userPosition);
-// Presently this function is run on 'componentDidMount'. Could create an a function that would be incoked when a button is clicked, and then the user's location is retrieved when they want to add themselves to the map. Should be as simple as creating a handleClick function, binding it, and then incoking it when the ADD button is clicked. Need to talk to Derek and integrate his homePage components with mine. Then we can integrate this function with his ADD component.
-// NOTE: Still need to add an information box to each marker.
-  }
-
   render(){
     return(
       // wrapper div for googleMap, add button, find button
@@ -80,10 +81,10 @@ class UserHomePage extends Component {
             </div>
         </div>
         <div className={'addFindContainer'}>
-          {/* put add and find components here */}
+          <AddButton 
+          getUserLocation={this.getUserLocation}
+          />
         </div>
-      {/* div(s) for add and find components should go here */}
-
       </div>
     );
   }

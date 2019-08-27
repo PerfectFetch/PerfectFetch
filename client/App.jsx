@@ -60,7 +60,7 @@ class App extends Component {
         <main>
           <Switch>
             <Route exact path="/" component={()=><Login  handleLoginSubmit={this.handleLoginSubmit} /> } />
-            <Route exact path="/Signup"component={()=><Signup handleSignupSubmit={this.handleSignupSubmit} />}/>
+            <Route exact path="/Signup" component={()=><Signup handleSignupSubmit={this.handleSignupSubmit} />}/>
           </Switch>
         </main>
       </div>
