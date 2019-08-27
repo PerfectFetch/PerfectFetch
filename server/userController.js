@@ -1,12 +1,15 @@
-//comments done by Irish Dave
+//comments in this file by Irish Dave
+//any questions please come find me
+//word wrap is your friend (option + Z)
 
-//bcrypt npm
-
-const userController = {};
+//requiring in pool from our datbase file
 const pool = require('./database')
+//setting our controller object
+const userController = {};
+//we use bcrypt here for hashing passwords. good docs on their npm page https://www.npmjs.com/package/bcrypt
 const bcrypt = require('bcrypt')
 
-//signup logic
+//our intention with this method is to enable a user to sign up. after which, their info will be stored in our users table and their passwords will be hashed for security purposes
 userController.createUser = (req, res, next) => {
   //destructuring
   const { name, email, password } = req.body
@@ -16,12 +19,12 @@ userController.createUser = (req, res, next) => {
     return res.status(400).send("some values are missing")
   } else {
     //hash the password using bcrypt
-    //password is password to hash
+    //check out this function on bcrypt npm page
     bcrypt.hash(password, 10).then(function (hash) {
 
         //query that will add values into our database
         const userQuery = 'INSERT INTO users (name, email, password ) VALUES($1, $2, $3)  RETURNING *';
-        //actual values to be added into database
+        //actual values to be added into users table. NOTE that we pass the hashed version of our password into the query, as opposed to the actual password
         const userValues = [
           name,
           email,
@@ -34,23 +37,24 @@ userController.createUser = (req, res, next) => {
           if (err) {
             res.status(400).send("invalid user info")
           } else {
-            //if not, redirect the user to the home page
+            //if the data comes back as true, we will send an object back to the front end. if this object gets received by the front end, state gets updated and the user is allowed sign in AKA redirected to /signin page via React Router
             console.log('account successfully created')
             if (data === true)
             return res.status(200).send({isSignedUp: true})
           }
         })
       })
+      //catch incase there's an error when entering password into bcrypt, such as the value entered into bcrypt function doesn't exist e.g. you entered psswrd instead of password
       .catch((err) => {
         console.log("error during bcrypt", err);
         res.status(500).send(err);
       });
   }
-  //!potentially not needed as we have no other middleware to run?
+  //while there is no other methods being run on this request, we figured the next method is good practice to have regardless
   next();
 }
 
-
+//our intention with this method is to enable a user to login. their info will be checked against the info stored in the users table, and if it's correct, the user will be allowed to log in, and redirected to the map page
 userController.loginUser = (req, res, next) => {
     //destructuring
     // console.log("req.body: ", req.body)
@@ -85,7 +89,7 @@ userController.loginUser = (req, res, next) => {
           bcrypt.compare(password, hash, (err, result) => {
             //if the passwords match...
             if (result === true) {
-              //...let user login
+              //if the data comes back as true, we will send an object back to the front end. if this object gets received by the front end, state gets updated and the user is allowed log in AKA redirected to /login page via React Router
               return res.status(200).send({isLoggedIn: true})
             } else {
               //...if not, send an error
@@ -95,7 +99,7 @@ userController.loginUser = (req, res, next) => {
         }
       })
     }
-    //!potentially not needed as we have no other middleware to run
+    //while there is no other methods being run on this request, we figured the next method is good practice to have regardless
     next();
   }
 module.exports = userController
