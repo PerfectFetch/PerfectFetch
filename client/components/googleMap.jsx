@@ -1,9 +1,19 @@
+// COMMENTS MADE BY GARETH L.
+// the documentation linked below is your best friend and also your enemy. You are officially warned.
+// docs: https://tomchentw.github.io/react-google-maps/
+
+
+// these imports are required. They are higher order components that wrap around the GoogleMap in order to render it correctly...
 import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps";
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
 const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
 
+// the logic inside 'MapWithAMarker' is used to display the marker on the map, and the associated InfoWindow
+// I have no idea what the options attribute does. But it's in the documentation example. I'm pretty sure you can delete it and it still works..?
+
+// Presently, the InfoWindow displays automatically, and when you click the 'X' to close it, it will not reappear until you refresh the page. Need to implement a way to display the InfoWindow onClick, so you can make it disappear and reappear.
 
 const MapWithAMarker = withScriptjs(withGoogleMap((props) => {
 

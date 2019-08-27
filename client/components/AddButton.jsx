@@ -1,3 +1,5 @@
+// comments made by GARETH L.
+
 import React, { Component } from 'react';
 
 class AddButton extends Component {
@@ -7,17 +9,19 @@ class AddButton extends Component {
 
 
   render(){
+    // the onKeyUp function captures the user's input. this is then passed as the argument to getUserLocation
+    // this is how the user input (i.e. the message they want to say about their project, which displays in the InfoWindow) is passed up and saved into the state object
     let userInfo = '';
     return(
       <div>
-          <input className={'addButton'} type="text" name="projectInfo" placeholder={"What are you working on?"} onKeyUp={
+          <input className={'addButtonInput'} type="text" name="projectInfo" placeholder={"What are you working on?"} onKeyUp={
             (e)=>{
               userInfo = e.target.value;
               console.log(userInfo); 
               console.log(e.target.value);
             }
             } />
-          <button className={'addButton'} onClick={()=>{
+          <button className={'addButtonInput'} onClick={()=>{
             this.props.getUserLocation(userInfo);
 
             }}>

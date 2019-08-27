@@ -1,3 +1,5 @@
+//comments by Irish Dave
+
 const pool = require('./database')
 const locationController = {}
 
@@ -6,12 +8,7 @@ const locationController = {}
 //adds their name / about
 locationController.addInfo = (req, res, next) => {
   //good to have email as foreign key as it is unique
-  const {
-    email,
-    message,
-    latitude,
-    longitude
-  } = req.body
+  const { email, message, latitude, longitude } = req.body
   console.log("req.body: ", req.body)
   //if name or email do not exist
   if (!email || !message) {
@@ -62,10 +59,11 @@ locationController.getAllInfo = (req, res, next) => {
 
 
 //!add delete functionality?
+
+//! this was our intentation blah blah
 locationController.deleteInfo = (req, res, next) => {
   const { message, email, latitude, longitude } = req.body
   console.log("req.body: ", req.body)
-
   if (!message) {
     res.status(400).send("no message!")
   } else {
