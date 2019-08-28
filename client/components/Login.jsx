@@ -2,18 +2,24 @@ import React, { useState } from 'react'
 
 const Login = () => {
     const url = 'http://localhost/8080'; 
-    // State hooks to update the username and password 
+    const ENTER_KEY = 13; 
+    // State hooks to update the email and password 
     const [ email, setEmail ] = useState(''); 
     const [ password, setPassword ] = useState(''); 
-    // Handler to update the email state
+    // Handler to update the user email
     const emailHandler = (e) => {
         const userEmail = e.target.value.trim(); 
         setEmail(userEmail); 
     }; 
     // Handler to update the password state
     const passwordHandler = (e) => {
-        const userPassword = e.target.value.trim(); 
-        setPassword(userPassword); 
+        // Check to see if user clicked enter key 
+        if (e.keyCode == ENTER_KEY) {
+          userVerifyHandler(); 
+        } else {
+          const userPassword = e.target.value.trim(); 
+          setPassword(userPassword); 
+        }
     }; 
     // Handler to send a post request 
     const userVerifyHandler = () => {
@@ -21,6 +27,7 @@ const Login = () => {
         fetch(url, {
           method: 'POST', 
           mode: 'cors', 
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json', 
           }, 
