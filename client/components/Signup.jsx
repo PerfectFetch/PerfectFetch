@@ -4,8 +4,9 @@ const Signup = () => {
   const [ username, setUsername ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ password1, setPassword1 ] = useState('');
-  const [ password2, setPassword2] = useState('');
+  const [ password2, setPassword2 ] = useState('');
   const [ zipcode, setZipcode ] = useState('');
+
   // function that checks whether p1 === p2, if it does send fetch request to store database, otherwise prompt user to make sure their passwords match. Need to also make sure username is not taken already
   const checkUserAndPasswordThenFetch = () => {
     let variables = {

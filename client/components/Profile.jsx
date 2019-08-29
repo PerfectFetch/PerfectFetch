@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { username, zipcode } from './Login.jsx'; 
 
 const Profile = () => {
   // Set our username, bio, tags state
@@ -28,18 +29,26 @@ const Profile = () => {
 
   // POST request to backend to update user info
   const profileFetchHandler = () => {
-    //! is URL correct???
-    fetch('http://localhost:8080/profile', {
+    // Query 
+    let variables = {
+        username: username,
+        bio: bio,
+        tags: tags,
+        zipcode: zipcode,
+     };
+     // POST request to our server so the user data gets saved
+    fetch('graphql', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
       headers: { 'Context-Type': 'application/json' },
-      body: {
-        Username: username,
-        Bio: bio,
-        Tags: tags
-      }
+      body: JSON.stringify({query: query})
     })
+    .then(res => res.json())
+    .then(res => {
+        console.log(res.data); 
+        window.href.location = '/homepage'; 
+    });
   };
 
   return (

@@ -1,52 +1,51 @@
 import React, { useState } from 'react'
 
 const Login = () => {
-    const url = 'http://localhost/8080'; 
     const ENTER_KEY = 13; 
     // State hooks to update the email and password 
     const [ email, setEmail ] = useState(''); 
-    const [ password, setPassword ] = useState(''); 
-    // Handler to update the user email
+    const [ pw, setPassword ] = useState(''); 
+    // Email handler to set user email 
     const emailHandler = (e) => {
         const userEmail = e.target.value.trim(); 
         setEmail(userEmail); 
     }; 
-    // Handler to update the password state
+    // Password handler to set user password
     const passwordHandler = (e) => {
-        // Check to see if user clicked enter key 
-        if (e.keyCode == ENTER_KEY) {
-          userVerifyHandler(); 
-        } else {
-          const userPassword = e.target.value.trim(); 
-          setPassword(userPassword); 
-        }
+        // Check if input keycode is 13 
+        if (e.keyCode === 13) verifyUserHandler(); 
+        // If not, save the input value to our state
+        const userPassword = e.target.value.trim(); 
+        setPassword(userPassword); 
     }; 
-    // Handler to send a post request 
-    const userVerifyHandler = () => {
-        // Post request to server 
-        fetch(url, {
+    // POST request handler to server 
+    const verifyUserHandler = () => {
+        // Query details 
+        let variables = {
+          email: email,
+          password: pw,
+        };
+        let mutation = `mutation ($email: String!, $password: String!) {
+                          login(email: $email, password: $password)}`
+        // POST request to our server
+        fetch('graphql', {
           method: 'POST', 
           mode: 'cors', 
           credentials: 'include',
           headers: {
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
           }, 
-          body: {
-            Email: email, 
-            Password: password,
-          }
+          // Include the collected user email and password as body
+          body: JSON.stringify({query: mutation, variables: variables}),
         })
-        // Server should send a boolean to determine whether
-        // the credentials are correct
         .then(res => res.text())
         .then(res => {
-            // Check to see the server response
-            if (res === true) {
-              console.log('It worked')
-              // Render the homepage 
-            } else {
-              alert('Your credentials are incorrect. Try again.')
-            }
+          if (res === true) {
+            // Redirect to homepage 
+            window.href.location = '/homepage'; 
+          } else {
+            alert('Incorrect email and/or password. Try again.'); 
+          }
         }); 
     }; 
     

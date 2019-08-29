@@ -1,30 +1,22 @@
-import React from 'react'
-
+import React, { setState } from 'react'
+// NavBar component 
 const NavBar = () => {
-    // Fetch handler here that gets the user data 
-    // Makes a get request 
-
-    //trigger onclick event for button
-    // set up handler that will fetch user's profile data from database
-    // GET request to /editprofile
-    // credentials: 'include' (which sends all json, images, etc)
-    // no body.... 
-    // return a promise
-
+    const url = 'http://localhost:8080/graphql'; 
+    const [ savedProfile, setProfile ] = useState([]); 
+    // Fetches the existing user data from our database to populate our profile page 
     const editHandler = () => {
-        fetch(fullURL, {
+        fetch(url, {
             method: 'GET',
             mode: 'cors',
             credentials: 'include',
             type: 'application/json'
-
         })
-            .then(res => res.json()) // where data = res.json()
-            .then(data => displayProfile(data))
-        //! need a displayProfile function that renders profile with the current data
+        .then(res => res.json()) 
+        .then(data => 
+            setProfile(data); 
+        ); 
     }
 
-    // 
     return (
         <div id="navContainer">
             <nav id="navbar">
@@ -36,3 +28,5 @@ const NavBar = () => {
 };
 
 export default NavBar; 
+
+

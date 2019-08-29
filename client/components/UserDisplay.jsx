@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react'; 
 
 // User Display component for each user 
 const UserDisplay = (props) => {
     return (
         <div>
-           <p>Name:{props.name}</p> 
+           <p>Username:{props.name}</p> 
            <p>Tags:{props.tags}</p>
         </div>
     )
