@@ -21,6 +21,7 @@ const NavBar = () => {
         })
             .then(res => res.json()) // where data = res.json()
             .then(data => displayProfile(data))
+        //! need a displayProfile function that renders profile with the current data
     }
 
     // 

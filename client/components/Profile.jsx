@@ -2,11 +2,8 @@ import React, { useState } from 'react'
 
 const Profile = () => {
   // Set our username, bio, tags state
-  const [ username, setUsername ] = useState('');
   const [ bio, setBio ] = useState('');
-  // is there a way to prevent refresh to avoid issues writing bio and page refreshing osomehow
   const [ tags, setTags ] = useState([]); 
-   // Check that the value has been checked 
   const checkboxHandler = (e) => {
     // If the box is checked, add to our state
     if (e.target.checked) {
@@ -17,7 +14,19 @@ const Profile = () => {
       setTags(tags.filter(type => type !== e.target.name));
     }
   };
-  // POST request to our server
+  // GET request to backend to display username and zipcode on profile
+  const displayUsernameAndZip = () => {
+    //! what would the URL be??
+    fetch('http://localhost:8080/user', {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
+
+  // POST request to backend to update user info
   const profileFetchHandler = () => {
     //! is URL correct???
     fetch('http://localhost:8080/profile', {

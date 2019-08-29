@@ -1,49 +1,63 @@
 import React, { useState } from 'react'
 
 const Signup = () => {
+  const [ username, setUsername ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ password1, setPassword1 ] = useState('');
   const [ password2, setPassword2] = useState('');
   const [ zipcode, setZipcode ] = useState('');
   // function that checks whether p1 === p2, if it does send fetch request to store database, otherwise prompt user to make sure their passwords match. Need to also make sure username is not taken already
   const checkUserAndPasswordThenFetch = () => {
-    //! first check whether the username hasn't been taken already
-    //* SERVER SIDE CHECKS USER
-    //! fill this info out when database is up
+    let variables = {
+      username: {username},
+      email: {email},
+      password: {password1},
+      zipcode: {zip}
+    };
+    let mutation = `mutation ($username: String!, $email: String!, $password: String!, $zipcode: String!) {
+                    signUp(username: $username, email: $email, password: $password, zipcode: $zipcode)
+                }`
 
     if (password1 === password2) {
-      fetch('http://localhost:8080/signup', {
+      fetch('http://localhost:8080/graphql', {
         method: 'POST',
         // including a cors mode prevents any cors issues
         mode: 'cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: {
-          Email: email,
-          Password: password1,
-          Zipcode: zipcode
+        headers: {
+          'Content-Type': 'application/json'
         },
+        body: JSON.stringify({ query: mutation, variables: variables })
       })
-        // getting back a boolean value from the server as to whether the user exists or not
-        .then(res => res.text())
-        // if this boolean value is true (user info was saved) then redirect user to homepage
-        // else ask user to choose a different username
-        .then(booleanValueFromServer => {
-          if (booleanValueFromServer) {
-            //! write code to route user to /homepage 
-            console.log(booleanValueFromServer) 
+        .then(res => res.json())
+        .then(res => {
+          console.log('res.data from POST request after submitting signup details', res.data)
+          if (res) {
+            //! if this boolean value is true (user info was saved) then redirect user to homepage
           } else {
+            // else ask user to choose a different username
             alert('Please choose a different username, the one you chose already exists!')
             // alert doesn't change the page
           }
-        });
+        })
       } else {
         alert('Passwords do not match. Please try again.');
-        //! if the passwords don't match, user needs to re-fill passwords
+        // if the passwords don't match, user needs to re-fill passwords
     }
   }
   return (
     <div className="signupWrapper">
       <form>
+        <div className="signupContainer">
+          <label>Username: </label>
+          <input
+            name='username'
+            type="text"
+            placeholder='Username'
+            onChange={e => setUsername(e.target.value.trim())}
+            value={username}
+            variant="outlined"
+            required />
+        </div>
         <div className="signupContainer">
           <label>Email: </label>
           <input
@@ -96,4 +110,8 @@ const Signup = () => {
   )
 };
 
+export const userAndZip = {
+  Username: username,
+  Zipcode: zipcode,
+}
 export default Signup; 
