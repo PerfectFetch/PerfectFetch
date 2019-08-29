@@ -1,6 +1,12 @@
 import React from 'react'
 
 const NavBar = () => {
+<<<<<<< HEAD
+    const url = 'http://localhost:8080/graphql'; 
+    // Edit profile handler 
+    const editHandler = () => {
+        fetch(url, {
+=======
     // Fetch handler here that gets the user data 
     // Makes a get request 
 
@@ -13,10 +19,28 @@ const NavBar = () => {
 
     const editHandler = () => {
         fetch(fullURL, {
+>>>>>>> dev
             method: 'GET',
             mode: 'cors',
             credentials: 'include',
             type: 'application/json'
+<<<<<<< HEAD
+
+        })
+            .then(res => res.json()) 
+            .then(data => displayProfile(data))
+    }
+
+    return (
+        <div id="navContainer">
+            <nav id="navbar">
+                <img id="navLogo" src="logo.jpg" />
+                <button onClick={() => editHandler()}></button>
+            </nav>
+        </div>
+    )
+};
+=======
 
         })
             .then(res => res.json()) // where data = res.json()
@@ -35,3 +59,6 @@ const NavBar = () => {
 };
 
 export default NavBar; 
+
+>>>>>>> dev
+
