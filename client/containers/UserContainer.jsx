@@ -1,30 +1,46 @@
-import React from 'react';
-import { prependOnceListener } from 'cluster';
+import React, { useState } from 'react'; 
+import UserDisplay from '../components/UserDisplay.jsx'; 
 
 const UserContainer = () => {
-    const users = [];
-    // What triggers getting this info 
-    // fetch request 
-    fetch('http://localhost:8080/homepage', {
-        method: 'GET',
+    // set our user state
+    const [ users, setUsers ] = useState([]); 
+    // Query
+    let query = 
+    `query {
+    getUsers
+    {
+    id
+    username
+    email
+    bio
+    zipcode
+    tags
+    }
+    }   
+    `
+    // fetch request to get all our existing users
+    fetch('graphql', {
+        method: 'POST',
         mode: 'cors',
-        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-    })
-        .then(res => res.json())
-        .then(data => {
-          for (let i = 0; i < data.length; i += 1) {
-            users.push(<UserDisplay
-              key={i}
-              Name={data.username}
-              //! worry about tags later
-            />)
-          }
-        })
-    // Use hooks to push our user data in our database to an empty array 
-    // Iterate through that array 
-    // For each user data, we render <UserDisplay >
-
-};
+        body: JSON.stringify({query: query}),
+    })  
+    .then(res => res.json())
+    .then(data => setUsers(data))
+    .catch(err => console.log(err)); 
+    // Return the user display 
+    return (
+        <div className="userContainer">
+            {/* Iterate through the user data and inject the values into UserDisplay component */}
+            {users.map((item, key) => {
+                <UserDisplay 
+                    key={key}
+                    {item.username}
+                    {item.tags}
+                />
+            })}
+        </div>
+    )
+}; 
 
 export default UserContainer; 

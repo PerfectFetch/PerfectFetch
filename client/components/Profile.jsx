@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { username, zipcode } from './Login.jsx'; 
 
 const Profile = () => {
-  // Set our nickname, bio, tags state
-  const [ nickname, setNickname ] = useState('');
+  // Set our username, bio, tags state
+  const [ username, setUsername ] = useState('');
   const [ bio, setBio ] = useState('');
   // is there a way to prevent refresh to avoid issues writing bio and page refreshing osomehow
   const [ tags, setTags ] = useState([]); 
@@ -19,31 +20,39 @@ const Profile = () => {
   };
   // POST request to our server
   const profileFetchHandler = () => {
-    //! is URL correct???
-    fetch('http://localhost:8080/profile', {
+    // Query 
+    let variables = {
+        username: username,
+        bio: bio,
+        tags: tags,
+        zipcode: zipcode,
+     };
+     // POST request to our server so the user data gets saved
+    fetch('graphql', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
       headers: { 'Context-Type': 'application/json' },
-      body: {
-        Nickname: nickname,
-        Bio: bio,
-        Tags: tags
-      }
+      body: JSON.stringify({query: query})
     })
+    .then(res => res.json())
+    .then(res => {
+        console.log(res.data); 
+        window.href.location = '/homepage'; 
+    });
   };
 
   return (
     <div>
-      <div id="nicknameDiv">
-        <label>Nickname: </label>
+      <div id="usernameContainer">
+        <label>Username: </label>
         <input
-          name='nickname'
+          name='username'
           type='text'
           // style={{ margin: 8 }}
           placeholder='Your display name'
-          onChange={e => setNickname(e.target.value.trim())}
-          value={nickname}
+          onChange={e => setUsername(e.target.value.trim())}
+          value={username}
           variant="outlined"
           required />
         <br />

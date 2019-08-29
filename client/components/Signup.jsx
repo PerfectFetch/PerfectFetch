@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 const Signup = () => {
+  const [ username, setName ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ password1, setPassword1 ] = useState('');
   const [ password2, setPassword2 ] = useState('');
@@ -13,7 +14,7 @@ const Signup = () => {
     //! fill this info out when database is up
 
     if (password1 === password2) {
-      fetch('http://localhost:8080/signup', {
+      fetch('http://localhost:8080/graphql', {
         method: 'POST',
         // including a cors mode prevents any cors issues
         mode: 'cors',
@@ -41,59 +42,54 @@ const Signup = () => {
         //! if the passwords don't match, user needs to re-fill passwords
     }
   }
-
   return (
-    <div>
+    <div className="signupWrapper">
       <form>
-        <div>
+        <div className="signupContainer">
           <label>Email: </label>
           <input
             name='email'
             type="text"
-            style={{ margin: 8 }}
             placeholder='Email'
             onChange={e => setEmail(e.target.value.trim())}
             value={email}
             variant="outlined"
             required />
         </div>
-        <div>
+        <div className="signupContainer">
           <label>Password: </label>
           <input
             name="password1"
             type="password"
-            style={{ margin: 8 }}
             placeholder="Password"
             onChange={e => setPassword1(e.target.value.trim())}
             value={password1}
             variant="outlined"
             required />
         </div>
-        <div>
+        <div className="signupContainer">
           <label>Re-Enter Password: </label>
           <input
             name="password2"
             type="password"
-            style={{ margin: 8 }}
             placeholder="Re-Enter Password"
             onChange={e => setPassword2(e.target.value.trim())}
             value={password2}
             variant="outlined"
             required />
         </div>
-        <div>
+        <div className="signupContainer">
           <label>Zipcode: </label>
           <input
             name="zipcode"
             type="text"
-            style={{ margin: 8 }}
             placeholder="Zipcode"
             onChange={e => setZipcode(e.target.value.trim())}
             value={zipcode}
             variant="outlined"
             required />
         </div>
-        <div>
+        <div className="signupContainer">
           <button type="submit" onSubmit={() => checkUserAndPasswordThenFetch()}>Sign Up</button>
         </div>
       </form >
