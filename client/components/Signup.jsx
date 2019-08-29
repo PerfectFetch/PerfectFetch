@@ -1,19 +1,12 @@
 import React, { useState } from 'react'
 
 const Signup = () => {
-<<<<<<< HEAD
   const [ username, setName ] = useState('');
   const [ email, setEmail ] = useState('');
   const [ password1, setPassword1 ] = useState('');
   const [ password2, setPassword2 ] = useState('');
   const [ zipcode, setZipcode ] = useState('');
 
-=======
-  const [ email, setEmail ] = useState('');
-  const [ password1, setPassword1 ] = useState('');
-  const [ password2, setPassword2] = useState('');
-  const [ zipcode, setZipcode ] = useState('');
->>>>>>> 8cb7441ab1821b9e7ec476095b7e9a755d969a0d
   // function that checks whether p1 === p2, if it does send fetch request to store database, otherwise prompt user to make sure their passwords match. Need to also make sure username is not taken already
   const checkUserAndPasswordThenFetch = () => {
     //! first check whether the username hasn't been taken already
@@ -50,10 +43,6 @@ const Signup = () => {
         //! if the passwords don't match, user needs to re-fill passwords
     }
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> 8cb7441ab1821b9e7ec476095b7e9a755d969a0d
   return (
     <div className="signupWrapper">
       <form>
