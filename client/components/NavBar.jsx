@@ -13,7 +13,7 @@ const NavBar = () => {
         })
         .then(res => res.json()) 
         .then(data => 
-            setProfile(data) 
+            setProfile(data)
         ); 
     }
 
