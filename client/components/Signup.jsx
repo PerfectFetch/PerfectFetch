@@ -9,21 +9,21 @@ const Signup = () => {
 
   // function that checks whether p1 === p2, if it does send fetch request to store database, otherwise prompt user to make sure their passwords match. Need to also make sure username is not taken already
   const checkUserAndPasswordThenFetch = () => {
-    let variables = {
-      username: {username},
-      email: {email},
-      password: {password1},
-      zipcode: {zip}
+    const variables = {
+      username: username,
+      email: email,
+      password: password1,
+      zipcode: zipcode,
     };
-    let mutation = `mutation ($username: String!, $email: String!, $password: String!, $zipcode: String!) {
+    const mutation = `mutation ($username: String!, $email: String!, $password: String!, $zipcode: String!) {
                     signUp(username: $username, email: $email, password: $password, zipcode: $zipcode)
                 }`
 
     if (password1 === password2) {
-      fetch('http://localhost:8080/graphql', {
+      fetch('graphql', {
         method: 'POST',
-        // including a cors mode prevents any cors issues
-        mode: 'cors',
+        // mode: 'cors',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -31,9 +31,9 @@ const Signup = () => {
       })
         .then(res => res.json())
         .then(res => {
-          console.log('res.data from POST request after submitting signup details', res.data)
-          if (res) {
-            //! if this boolean value is true (user info was saved) then redirect user to homepage
+          console.log('data from signup fetch', res.data)
+          if (res.data) {
+            window.href.location = '/profile';
           } else {
             // else ask user to choose a different username
             alert('Please choose a different username, the one you chose already exists!')
@@ -111,7 +111,7 @@ const Signup = () => {
   )
 };
 
-export const userAndZip = {
+export const userzipSignUp = {
   Username: username,
   Zipcode: zipcode,
 }

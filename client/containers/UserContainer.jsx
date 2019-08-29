@@ -21,7 +21,7 @@ const UserContainer = () => {
     // fetch request to get all our existing users
     fetch('graphql', {
         method: 'POST',
-        mode: 'cors',
+        // mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({query: query}),
     })  
@@ -35,8 +35,8 @@ const UserContainer = () => {
             {users.map((item, key) => {
                 <UserDisplay 
                     key={key}
-                    {item.username}
-                    {item.tags}
+                    username={item.username}
+                    tags={item.tags.maps}
                 />
             })}
         </div>

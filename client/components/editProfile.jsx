@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { userzipSignUp } from './Signup.jsx';
 import { savedProfile } from './NavBar.jsx';
 
-const Profile = () => {
+const editProfile = () => {
   // Set our username, bio, tags state
-  const [ username, setUsername] = useState('');
-  const [ zipcode, setZipcode] = useState(''); 
-  const [ bio, setBio ] = useState('');
-  const [ tags, setTags ] = useState([]); 
+  const [username, setUsername] = useState('');
+  const [zipcode, setZipcode] = useState('');
+  const [bio, setBio] = useState('');
+  const [tags, setTags] = useState([]);
   const checkboxHandler = (e) => {
     // If the box is checked, add to our state
     if (e.target.checked) {
@@ -22,16 +22,16 @@ const Profile = () => {
   const profileFetchHandler = () => {
     // Query 
     const variables = {
-        username: username,
-        zipcode: zipcode,
-        bio: bio,
-        tags: tags,
+      username: username,
+      zipcode: zipcode,
+      bio: bio,
+      tags: tags,
     };
-    
+
     const mutation = `mutation ($username:String!, $bio:String, $tags:[String], $zipcode:String!){
                    setProfile(username:$username, bio:$bio, tags:$tags, zipcode:$zipcode)
                }`
-     // POST request to our server so the user data gets saved
+    // POST request to our server so the user data gets saved
     fetch('graphql', {
       method: 'POST',
       // mode: 'cors',
@@ -39,12 +39,16 @@ const Profile = () => {
       headers: { 'Context-Type': 'application/json' },
       body: JSON.stringify({ query: mutation, variables: variables })
     })
-    .then(res => res.json())
-    .then(res => {
-        console.log('fetch request in signup', res.data); 
-        window.href.location = '/homepage'; 
-    });
+      .then(res => res.json())
+      .then(res => {
+        console.log('fetch request in signup', res.data);
+        window.href.location = '/homepage';
+      });
   };
+
+  const hasBeenChecked = () => {
+
+  }
 
   return (
     <div>
@@ -53,9 +57,9 @@ const Profile = () => {
         <input
           name='username'
           type='text'
-          placeholder={userzipSignUp.Username}
+          placeholder={savedProfile.username}
           onChange={e => setUsername(e.target.value.trim())}
-          value={username}
+          value={savedProfile.username}
           variant="outlined"
           required />
         <br />
@@ -76,7 +80,7 @@ const Profile = () => {
 
       <div id="bioDiv">
         <span><h4>What do you hope to gain from pair progamming? </h4></span>
-        <textarea 
+        <textarea
           // value={value}
           cols={55}
           rows={10}
@@ -84,10 +88,10 @@ const Profile = () => {
           onChange={e => setBio(e.target.value)}
           maxLength={200}
           value={bio}
-          />
+        />
       </div>
       <h4>Select pair programming interests:</h4>
-      <input className="box" type="checkbox" name="TypeScript" onChange={(e) => checkboxHandler(e)} /><label> TypeScript</label><br /><br />
+      <input className="box" type="checkbox" name="TypeScript" onChange={(e) => checkboxHandler(e)} checked={hasBeenChecked}/><label> TypeScript</label><br /><br />
       <input className="box" type="checkbox" name="JS: Beginner" onChange={(e) => checkboxHandler(e)} /><label> JS: Beginner</label><br />
       <input className="box" type="checkbox" name="JS: Intermediate" onChange={(e) => checkboxHandler(e)} /><label> JS: Intermediate</label><br />
       <input className="box" type="checkbox" name="JS: Advanced" onChange={(e) => checkboxHandler(e)} /><label> JS: Advanced</label><br />
@@ -103,8 +107,8 @@ const Profile = () => {
       <input className="box" type="checkbox" name="MongoDB" onChange={(e) => checkboxHandler(e)} /><label> MongoDB</label><br />
       <input className="box" type="checkbox" name="GraphQL" onChange={(e) => checkboxHandler(e)} /><label> GraphQL</label><br />
       <button id="profileBtn" onClick={() => profileFetchHandler()}>Submit</button>
-    </div>         
-      )
-    }; 
-                                                                                                                                              
+    </div>
+  )
+};
+
 export default Profile; 
