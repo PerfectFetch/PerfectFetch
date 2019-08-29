@@ -15,8 +15,8 @@ const routing = (
     <Route exact path="/" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/profile" component={Profile} />
-    <Routh path="/homepage" component={App} />
+    <Route path="/homepage" component={App} />
     </Router>
 ); 
 
-render(routing, document.querySelector('#root'));
+render(<Profile />, document.querySelector('#root'));
