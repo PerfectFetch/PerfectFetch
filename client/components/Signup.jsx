@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
 const Signup = () => {
-  const [username, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password1, setPassword1] = useState('');
-  const [password2, setPassword2] = useState('');
-  const [zipcode, setZipcode] = useState('');
+  const [ username, setName ] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ password1, setPassword1 ] = useState('');
+  const [ password2, setPassword2 ] = useState('');
+  const [ zipcode, setZipcode ] = useState('');
 
   // function that checks whether p1 === p2, if it does send fetch request to store database, otherwise prompt user to make sure their passwords match. Need to also make sure username is not taken already
   const checkUserAndPasswordThenFetch = () => {
@@ -14,7 +14,7 @@ const Signup = () => {
     //! fill this info out when database is up
 
     if (password1 === password2) {
-      fetch('http://localhost:8080/signup', {
+      fetch('http://localhost:8080/graphql', {
         method: 'POST',
         // including a cors mode prevents any cors issues
         mode: 'cors',
@@ -44,12 +44,6 @@ const Signup = () => {
         //! if the passwords don't match, user needs to re-fill passwords
     }
   }
-
-  // console.log(username)
-  // console.log(email)
-  // console.log(password1)
-  // console.log(password2)
-  // console.log(zipcode)
 
   return (
     <div>

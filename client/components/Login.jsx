@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const Login = () => {
-    const url = 'http://localhost/8080'; 
+    const url = 'http://localhost/8080/graphql'; 
     const ENTER_KEY = 13; 
     // State hooks to update the email and password 
     const [ email, setEmail ] = useState(''); 
