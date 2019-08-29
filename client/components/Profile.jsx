@@ -23,18 +23,6 @@ const Profile = () => {
       setTags(tags.filter(type => type !== e.target.name));
     }
   };
-  // GET request to backend to display username and zipcode on profile
-  const displayUsernameAndZip = () => {
-    //! what would the URL be??
-    fetch('http://localhost:8080/user', {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/json' },
-    })
-  }
-
-
   // POST request to backend to update user info
   const profileFetchHandler = () => {
     // Query 
